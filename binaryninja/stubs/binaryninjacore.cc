@@ -600,7 +600,7 @@ BINARYNINJACOREAPI void BNFreeUserList(BNUser** users, size_t count) {}
 BINARYNINJACOREAPI char* BNGetUserName(BNUser* user) { return {}; }
 BINARYNINJACOREAPI char* BNGetUserEmail(BNUser* user) { return {}; }
 BINARYNINJACOREAPI char* BNGetUserId(BNUser* user) { return {}; }
-BINARYNINJACOREAPI bool BNOpenProject(BNFileMetadata* file) { return {}; }
+BINARYNINJACOREAPI BNProject* BNOpenProject(const char* path) { return {}; }
 BINARYNINJACOREAPI void BNCloseProject(BNFileMetadata* file) {}
 BINARYNINJACOREAPI bool BNIsProjectOpen(BNFileMetadata* file) { return {}; }
 BINARYNINJACOREAPI char* BNGetCurrentView(BNFileMetadata* file) { return {}; }
@@ -2622,8 +2622,8 @@ BINARYNINJACOREAPI BNIntegerDisplayType BNGetIntegerConstantDisplayType(
 }
 BINARYNINJACOREAPI void BNSetIntegerConstantDisplayType(
     BNFunction* func, BNArchitecture* arch, uint64_t instrAddr, uint64_t value,
-    size_t operand, BNIntegerDisplayType type) {}
-BINARYNINJACOREAPI BNType* BNGetIntegerConstantDisplayTypeEnumerationType(
+    size_t operand, BNIntegerDisplayType type, const char*) {}
+BINARYNINJACOREAPI char* BNGetIntegerConstantDisplayTypeEnumerationType(
     BNFunction* func, BNArchitecture* arch, uint64_t instrAddr, uint64_t value,
     size_t operand) {
   return {};
@@ -3044,7 +3044,7 @@ BINARYNINJACOREAPI BNQualifiedNameAndType*
 BNGetAnalysisDependencySortedTypeList(BNBinaryView* view, size_t* count) {
   return {};
 }
-BINARYNINJACOREAPI void BNFreeTypeList(BNQualifiedNameAndType* types,
+BINARYNINJACOREAPI void BNFreeTypeList(BNType** types,
                                        size_t count) {}
 BINARYNINJACOREAPI void BNFreeTypeIdList(BNQualifiedNameTypeAndId* types,
                                          size_t count) {}
@@ -5391,7 +5391,7 @@ BINARYNINJACOREAPI bool BNAddTypeMemberTokens(BNType* type, BNBinaryView* data,
   return {};
 }
 BINARYNINJACOREAPI BNTypeDefinitionLine* BNGetTypeLines(
-    BNType* type, BNBinaryView* data, const char* name, int lineWidth,
+    BNType* type, BNTypeContainer* types, const char* name, int lineWidth,
     bool collapsed, BNTokenEscapingType escaping, size_t* count) {
   return {};
 }
@@ -5663,7 +5663,7 @@ BINARYNINJACOREAPI BNStructureMember* BNGetStructureMembers(BNStructure* s,
 BINARYNINJACOREAPI void BNFreeStructureMemberList(BNStructureMember* members,
                                                   size_t count) {}
 BINARYNINJACOREAPI BNInheritedStructureMember*
-BNGetStructureMembersIncludingInherited(BNStructure* s, BNBinaryView* view,
+BNGetStructureMembersIncludingInherited(BNStructure* s, BNTypeContainer* view,
                                         size_t* count) {
   return {};
 }
@@ -5987,7 +5987,7 @@ BINARYNINJACOREAPI bool BNGetTypePrinterTypeStringAfterName(
   return {};
 }
 BINARYNINJACOREAPI bool BNGetTypePrinterTypeLines(
-    BNTypePrinter* printer, BNType* type, BNBinaryView* data,
+    BNTypePrinter* printer, BNType* type, BNTypeContainer* types,
     BNQualifiedName* name, int lineWidth, bool collapsed,
     BNTokenEscapingType escaping, BNTypeDefinitionLine** result,
     size_t* resultCount) {
@@ -7157,8 +7157,8 @@ BINARYNINJACOREAPI int BNLlvmServicesAssemble(const char* src, int dialect,
   return {};
 }
 BINARYNINJACOREAPI void BNLlvmServicesAssembleFree(char* outBytes, char* err) {}
-BINARYNINJACOREAPI int BNDeleteFile(const char* path) { return {}; }
-BINARYNINJACOREAPI int BNDeleteDirectory(const char* path, int contentsOnly) {
+BINARYNINJACOREAPI bool BNDeleteFile(const char* path) { return {}; }
+BINARYNINJACOREAPI bool BNDeleteDirectory(const char* path, int contentsOnly) {
   return {};
 }
 BINARYNINJACOREAPI bool BNCreateDirectory(const char* path,
